@@ -13,7 +13,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-swiper [movies]="movies"></app-swiper>
+  <app-swiper *ngIf="movies.length > 0" [movies]="movies"></app-swiper>
 
-  <app-explore-container name="Hi SerieSapiens!"></app-explore-container>
 </ion-content>
