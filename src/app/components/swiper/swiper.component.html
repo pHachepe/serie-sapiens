@@ -1,15 +1,5 @@
-<swiper-container [slidesPerView]="3" [loop]="true" class="flex overflow-hidden">
-  <swiper-slide *ngFor="let movie of movies" class="flex-shrink-0">
-    <ion-card class="bg-slate-800 rounded-lg shadow-md overflow-hidden">
-      <ion-card-content class="p-4">
-        <ion-list>
-          <button ion-item (click)="goToFilmDetail(movie)" class="flex items-center space-x-3">
-            <div class="flex-shrink-0">
-              <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="" class="h-32 w-32 object-cover rounded-md">
-            </div>
-          </button>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
+<swiper-container [slidesPerView]="3" [spaceBetween]="30" free-mode="true">
+  <swiper-slide *ngFor="let movie of movies" class="flex-shrink-0 w-52">
+    <app-movie-card [movie]="movie"></app-movie-card>
   </swiper-slide>
 </swiper-container>

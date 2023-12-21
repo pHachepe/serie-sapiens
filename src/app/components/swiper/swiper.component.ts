@@ -7,6 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { MovieCardComponent } from '../movie-card/movie-card.component';
 
 @Component({
   selector: 'app-swiper',
@@ -18,17 +19,11 @@ export class SwiperComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.movies);
-  }
-
-  goToFilmDetail(id: number) {
-    console.log('el id es: ', id);
-  }
+  ngOnInit() {}
 }
 
 @NgModule({
-  declarations: [SwiperComponent],
+  declarations: [SwiperComponent, MovieCardComponent],
   imports: [IonicModule, CommonModule],
   exports: [SwiperComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
