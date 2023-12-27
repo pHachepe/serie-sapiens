@@ -7,15 +7,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { MovieCardModule } from '../movie-card/movie-card.component';
+import { Result } from 'src/app/models/result.model';
 
 @Component({
   selector: 'app-swiper',
   templateUrl: './swiper.component.html',
-  styleUrls: ['./swiper.component.scss'],
 })
 export class SwiperComponent implements OnInit {
-  @Input() movies: any[] = [];
+  @Input() title: string = '';
+  @Input() items!: Result[];
 
   constructor() {}
 
@@ -23,12 +24,12 @@ export class SwiperComponent implements OnInit {
 }
 
 @NgModule({
-  declarations: [SwiperComponent, MovieCardComponent],
-  imports: [IonicModule, CommonModule],
+  declarations: [SwiperComponent],
+  imports: [IonicModule, CommonModule, MovieCardModule],
   exports: [SwiperComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class WrapperModule {}
+export class SwiperModule {}
 
 // https://manuel-rauber.com/2021/02/23/youre-using-custom_elements_schema-wrong/
 // https://ionicframework.com/docs/angular/slides
