@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ resultDetails?.title || resultDetails?.name || 'Detalles' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card *ngIf="resultDetails">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + (resultDetails.backdrop_path || resultDetails.poster_path)" alt="Portada" />
+    <ion-card-header>
+      <ion-card-title>{{ resultDetails.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ resultDetails.overview }}</p>
+      <p>Fecha de estreno: {{ resultDetails.release_date || resultDetails.first_air_date | date }}</p>
+      <p>Calificación: {{ resultDetails.vote_average }}/10</p>
+      <p>Recuento de votos: {{ resultDetails.vote_count }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!resultDetails">
+    <p>No hay detalles disponibles para mostrar.</p>
+  </div>
+</ion-content>
