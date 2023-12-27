@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabTrendingPage } from './tab-trending.page';
 import { TabTrendingPageRoutingModule } from './tab-trending-routing.module';
-import { WrapperModule } from '../components/swiper/swiper.component';
+import { SwiperModule } from '../components/swiper/swiper.component';
+import { TopSwiperModule } from '../components/top-swiper/top-swiper.component';
+import { HeaderModule } from '../components/header/header.component';
 
 @NgModule({
   declarations: [TabTrendingPage],
@@ -13,7 +15,9 @@ import { WrapperModule } from '../components/swiper/swiper.component';
     CommonModule,
     FormsModule,
     TabTrendingPageRoutingModule,
-    WrapperModule,
+    SwiperModule,
+    TopSwiperModule,
+    HeaderModule,
   ],
 })
 export class TabTrendingPageModule {}
