@@ -1,31 +1,122 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // duda poner aqui o en app.module.ts
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-export interface ApiResult {
-  page: number;
-  results: any[];
-  total_results: number;
-  total_pages: number;
-}
+import { Result, ApiResult } from '../models/result.model';
+import { MediaType } from '../models/media-types.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MoviedbService {
+  private apiUrl = environment.baseUrl;
+  private apiKey = environment.apiKey;
 
   constructor(private http: HttpClient) {}
- 
-  getTopRatedMovies(page = 1): Observable<ApiResult> {
+
+  private buildUrl(path: string, params: any = {}): string {
+    const query = new URLSearchParams({
+      ...params,
+      api_key: this.apiKey,
+    }).toString();
+    return `${this.apiUrl}/${path}?${query}`;
+  }
+
+  getDetails(id: number, type: MediaType): Observable<Result> {
+    let path = `${type}/${id}`;
+    return this.http.get<Result>(this.buildUrl(path, { language: 'es-ES' }));
+  }
+
+  getProviders(mediaId: number, type: MediaType): Observable<any> {
+    let path = `${type}/${mediaId}/watch/providers`;
+    return this.http.get<any>(this.buildUrl(path));
+  }
+
+  getRecommendations(
+    mediaId: number,
+    type: MediaType,
+    page: number = 1
+  ): Observable<ApiResult> {
+    let path = `${type}/${mediaId}/recommendations`;
     return this.http.get<ApiResult>(
-      `${environment.baseUrl}/movie/popular?page=${page}&api_key=${environment.apiKey}`
+      this.buildUrl(path, { language: 'es-ES', page, region: 'US' })
     );
   }
- 
-  getMovieDetails(id: string): Observable<any> {
+
+  getMediaList(
+    type: MediaType,
+    category: string,
+    page: number = 1
+  ): Observable<ApiResult> {
+    let path = `${type}/${category}`;
     return this.http.get<ApiResult>(
-      `${environment.baseUrl}/movie/${id}?api_key=${environment.apiKey}`
+      this.buildUrl(path, { language: 'es-ES', page })
+    );
+  }
+
+  getTrending(
+    type: MediaType,
+    timeWindow: string,
+    page: number = 1
+  ): Observable<ApiResult> {
+    let path = `trending/${type}/${timeWindow}`;
+    return this.http.get<ApiResult>(
+      this.buildUrl(path, { language: 'es-ES', page })
+    );
+  }
+
+  getPopularMovies(page: number = 1) {
+    return this.getMediaList('movie', 'popular', page);
+  }
+
+  getTrendingMovies(page: number = 1) {
+    return this.getTrending('movie', 'day', page);
+  }
+
+  getPopularSeries(page: number = 1) {
+    return this.getMediaList('tv', 'popular', page);
+  }
+
+  getTrendingSeries(page: number = 1) {
+    return this.getTrending('tv', 'day', page);
+  }
+
+  // Método para obtener documentales populares
+  getPopularDocumentaries(page: number = 1) {
+    return this.http.get<ApiResult>(
+      `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&with_genres=99&language=es-ES&page=${page}`
+    );
+  }
+
+  // Método para obtener los mejor valorados
+  getTopRated(type: MediaType, page: number = 1) {
+    return this.http.get<ApiResult>(
+      `${environment.baseUrl}/discover/${type}?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`
+    );
+  }
+
+  // Método para obtener las películas mejor valoradas
+  getTopRatedMovies(page: number = 1) {
+    return this.getTopRated('movie', page);
+  }
+
+  // Método para obtener las series mejor valoradas
+  getTopRatedSeries(page: number = 1) {
+    return this.getTopRated('tv', page);
+  }
+
+  // Método para obtener los documentales mejor valorados
+  getTopRatedDocumentaries(page: number = 1) {
+    return this.http.get<ApiResult>(
+      `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&with_genres=99&vote_count.gte=200`
+    );
+  }
+
+  // Método para obtener los próximos estrenos
+  getUpcoming(type: MediaType, page: number = 1) {
+    let path = `${type}/upcoming`;
+    return this.http.get<ApiResult>(
+      this.buildUrl(path, { language: 'es-ES', page })
     );
   }
 }
