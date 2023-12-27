@@ -1,0 +1,17 @@
+<div class="px-4 pt-4">
+  <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
+  <swiper-container [slidesPerView]="2.5" free-mode="true">
+    <swiper-slide *ngFor="let item of items; let i = index">
+      <div class="relative flex flex-col mx-2">
+        <div class="absolute text-9xl font-bold opacity-75 z-10 bottom-0 -left-5 text-white
+          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          {{ i + 1 }}
+        </div>
+        <div class="absolute text-9xl font-bold bottom-0 -left-5 text-white">
+          {{ i + 1 }}
+        </div>
+        <app-movie-card [result]="item" class="ml-2"></app-movie-card>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+</div>
