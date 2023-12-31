@@ -19,7 +19,7 @@ export class MovieCardComponent {
 
   goToDetail() {
     this.resultDataService.setSelectedResult(this.result);
-    this.router.navigate(['/resource-details', this.result.media_type, this.result.id]);
+    this.router.navigate(['/tabs/details', this.result.media_type, this.result.id]);
   }
 }
 
