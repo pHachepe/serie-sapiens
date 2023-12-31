@@ -10,6 +10,9 @@
 <ion-content class="bg-black">
   <!-- Trailer -->
   <iframe *ngIf="trailerUrlSafe" [src]="trailerUrlSafe" class="w-full h-64" frameborder="0" allowfullscreen></iframe>
+  <!-- Si no hay tráiler, mostrar poster -->
+  <img *ngIf="!trailerUrlSafe && resultDetails?.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + resultDetails?.poster_path"
+    class="w-full h-64 object-cover" alt="Backdrop">
 
   <!-- Fila de iconos para acciones -->
   <div class="flex dark:bg-neutral-900 justify-center items-center px-4">
