@@ -154,4 +154,18 @@ export class MoviedbService {
       })
     );
   }
+
+  search(query: string): Observable<ApiResult> {
+    const path = 'search/multi';
+    return this.http
+      .get<ApiResult>(this.buildUrl(path, { language: 'es-ES', query }))
+      .pipe(
+        map((apiResult) => ({
+          ...apiResult,
+          results: apiResult.results.filter(
+            (result) => result.media_type !== 'person'
+          ),
+        }))
+      );
+  }
 }
