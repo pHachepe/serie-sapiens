@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Result, ApiResult } from '../models/result.model';
 import { MediaType } from '../models/media-types.model';
+import { ApiResult, Result } from '../models/result.model';
+import { Video, Videos } from '../models/video.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,27 @@ export class MoviedbService {
     return this.http.get<Result>(this.buildUrl(path, { language: 'es-ES' }));
   }
 
-  getProviders(mediaId: number, type: MediaType): Observable<any> {
+  getProviders(
+    mediaId: number,
+    type: MediaType,
+    countryCode: string = 'ES'
+  ): Observable<any> {
     let path = `${type}/${mediaId}/watch/providers`;
-    return this.http.get<any>(this.buildUrl(path));
+    return this.http.get<any>(this.buildUrl(path)).pipe(
+      map((response) => response.results[countryCode] || null),
+      map((result) => {
+        if (result) {
+          ['flatrate', 'rent', 'buy'].forEach((category) => {
+            if (result[category]) {
+              result[category].forEach((provider: any) => {
+                provider.logo_path = `https://www.themoviedb.org/t/p/w92/${provider.logo_path}`;
+              });
+            }
+          });
+        }
+        return result;
+      })
+    );
   }
 
   getRecommendations(
@@ -117,6 +136,22 @@ export class MoviedbService {
     let path = `${type}/upcoming`;
     return this.http.get<ApiResult>(
       this.buildUrl(path, { language: 'es-ES', page })
+    );
+  }
+
+  getTrailers(
+    id: number,
+    type: MediaType,
+    language: string = 'es-ES'
+  ): Observable<Videos> {
+    let path = `${type}/${id}/videos`;
+    return this.http.get<any>(this.buildUrl(path, { language })).pipe(
+      map((result) => {
+        result.results.forEach((video: Video) => {
+          video.url = `https://www.youtube.com/embed/${video.key}`;
+        });
+        return result;
+      })
     );
   }
 }
