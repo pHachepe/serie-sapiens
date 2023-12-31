@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ResourceDetailsPage } from './pages/resource-details/resource-details.page';
 
 const routes: Routes = [
   {
@@ -9,13 +8,10 @@ const routes: Routes = [
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
   {
-    path: 'resource-details',
+    path: 'search',
     loadChildren: () =>
-      import('./pages/resource-details/resource-details.module').then(
-        (m) => m.ResourceDetailsPageModule
-      ),
+      import('./pages/search/search.module').then((m) => m.SearchPageModule),
   },
-  { path: 'resource-details/:media_type/:id', component: ResourceDetailsPage },
 ];
 @NgModule({
   imports: [
