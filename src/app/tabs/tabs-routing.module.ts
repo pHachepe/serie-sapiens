@@ -8,33 +8,48 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'searchtab',
+        loadChildren: () =>
+          import('./search-tab/search-tab.module').then(
+            (m) => m.SearchTabPageModule
+          ),
+      },
+      {
         path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () =>
+          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
         path: 'tabTrending',
-        loadChildren: () => import('../tabTrending/tab-trending.module').then(m => m.TabTrendingPageModule)
+        loadChildren: () =>
+          import('../tabTrending/tab-trending.module').then(
+            (m) => m.TabTrendingPageModule
+          ),
       },
       {
         path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () =>
+          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
       },
       {
         path: '',
         redirectTo: '/tabs/tabTrending',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'details/:media_type/:id',
-        loadChildren: () => import('../pages/resource-details/resource-details.module').then(m => m.ResourceDetailsPageModule)
+        loadChildren: () =>
+          import('../pages/resource-details/resource-details.module').then(
+            (m) => m.ResourceDetailsPageModule
+          ),
       },
-    ]
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/tabTrending',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
