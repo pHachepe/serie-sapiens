@@ -23,7 +23,11 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/tabTrending',
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'details/:media_type/:id',
+        loadChildren: () => import('../pages/resource-details/resource-details.module').then(m => m.ResourceDetailsPageModule)
+      },
     ]
   },
   {
