@@ -1,6 +1,8 @@
+import { Video } from './video.model';
+
 export interface ApiResult {
   page: number;
-  results: any[];
+  results: Result[];
   total_results: number;
   total_pages: number;
 }
@@ -16,6 +18,7 @@ export interface Result {
   popularity: number;
   poster_path: string | null;
   release_date: string;
+  runtime?: number;
   first_air_date: string;
   title: string;
   name: string;
@@ -23,6 +26,7 @@ export interface Result {
   vote_count: number;
 
   media_type?: string;
+  videos?: Video[];
 }
 
 /*
@@ -34,7 +38,6 @@ export interface Result {
 "production_companies": [],
 "production_countries": [],
 "revenue": 0,
-"runtime": 0,
 "spoken_languages": [],
 "status": "In Production",
 "tagline": ""
