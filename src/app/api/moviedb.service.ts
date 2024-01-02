@@ -172,7 +172,7 @@ export class MoviedbService {
         map((apiResult) => ({
           ...apiResult,
           results: apiResult.results.filter(
-            (result) => result.media_type !== 'person' && result.vote_count > 0
+            (result) => result.media_type !== 'person' && result.vote_count > 0 && result.poster_path
           ),
         }))
       );
