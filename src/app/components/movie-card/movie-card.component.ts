@@ -1,6 +1,6 @@
 import { Component, Input, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResultDataService } from 'src/app/services/result-data.service';
+import { ResultDataService } from 'src/app/services/result-data/result-data.service';
 import { Result } from 'src/app/models/result.model';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
