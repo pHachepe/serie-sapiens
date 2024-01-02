@@ -14,9 +14,6 @@ import { Video } from 'src/app/models/video.model';
   templateUrl: 'resource-details.page.html',
 })
 export class ResourceDetailsPage implements OnInit {
-  openLink(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
   resultDetails: Result | null = null;
   trailerUrlSafe: SafeResourceUrl | null = null;
   id: number | null = null;
@@ -30,7 +27,7 @@ export class ResourceDetailsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private moviedbService: MoviedbService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap
