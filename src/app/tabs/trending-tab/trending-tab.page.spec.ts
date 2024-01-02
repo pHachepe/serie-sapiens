@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { TabTrendingPage } from './tab-trending.page';
+import { TrendingTabPage } from './trending-tab.page';
 
-describe('TabTrendingPage', () => {
-  let component: TabTrendingPage;
-  let fixture: ComponentFixture<TabTrendingPage>;
+describe('TrendingTabPage', () => {
+  let component: TrendingTabPage;
+  let fixture: ComponentFixture<TrendingTabPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TabTrendingPage],
+      declarations: [TrendingTabPage],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabTrendingPage);
+    fixture = TestBed.createComponent(TrendingTabPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

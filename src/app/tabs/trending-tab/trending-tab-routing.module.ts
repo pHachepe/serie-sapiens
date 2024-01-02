@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabTrendingPage } from './tab-trending.page';
+import { TrendingTabPage } from './trending-tab.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: TabTrendingPage,
+    component: TrendingTabPage,
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabTrendingPageRoutingModule {}
+export class TrendingTabPageRoutingModule {}

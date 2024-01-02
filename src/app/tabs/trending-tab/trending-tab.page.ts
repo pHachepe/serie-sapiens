@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { MoviedbService } from '../api/moviedb.service';
+import { MoviedbService } from '../../api/moviedb.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { Result } from '../models/result.model';
+import { Result } from '../../models/result.model';
 import { finalize, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-tab-trending',
-  templateUrl: 'tab-trending.page.html'
+  selector: 'app-trending-tab',
+  templateUrl: 'trending-tab.page.html'
 })
-export class TabTrendingPage implements OnInit {
+export class TrendingTabPage implements OnInit {
   topTenTrendingMovies$!: Observable<Result[]>;
   popularMovies$!: Observable<Result[]>;
   topTenTrendingSeries$!: Observable<Result[]>;
@@ -22,7 +22,7 @@ export class TabTrendingPage implements OnInit {
   constructor(
     private moviedbService: MoviedbService,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
   async ngOnInit() {
     const loading = await this.presentLoading();

@@ -20,10 +20,10 @@ const routes: Routes = [
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
-        path: 'tabTrending',
+        path: 'trendingtab',
         loadChildren: () =>
-          import('../tabTrending/tab-trending.module').then(
-            (m) => m.TabTrendingPageModule
+          import('./trending-tab/trending-tab.module').then(
+            (m) => m.TrendingTabPageModule
           ),
       },
       {
@@ -33,7 +33,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tabTrending',
+        redirectTo: '/tabs/trendingtab',
         pathMatch: 'full',
       },
       {
@@ -47,7 +47,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tabTrending',
+    redirectTo: '/tabs/trendingtab',
     pathMatch: 'full',
   },
 ];
