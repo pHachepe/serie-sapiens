@@ -57,9 +57,18 @@ export class MoviedbService {
     page: number = 1
   ): Observable<ApiResult> {
     let path = `${type}/${mediaId}/recommendations`;
-    return this.http.get<ApiResult>(
-      this.buildUrl(path, { language: 'es-ES', page, region: 'US' })
-    );
+    return this.http
+      .get<ApiResult>(
+        this.buildUrl(path, { language: 'es-ES', page})
+      )
+      .pipe(
+        map((apiResult) => ({
+          ...apiResult,
+          results: apiResult.results
+            .filter((item) => item.poster_path)
+            .sort((item1, item2) => item2.popularity - item1.popularity),
+        }))
+      );
   }
 
   getMediaList(
@@ -163,7 +172,7 @@ export class MoviedbService {
         map((apiResult) => ({
           ...apiResult,
           results: apiResult.results.filter(
-            (result) => result.media_type !== 'person'
+            (result) => result.media_type !== 'person' && result.vote_count > 0
           ),
         }))
       );
