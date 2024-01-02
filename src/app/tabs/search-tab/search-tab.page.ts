@@ -31,16 +31,16 @@ export class SearchTabPage implements OnInit {
           return this.moviedbService.search(query);
         })
       )
-      .subscribe(
-        (results) => {
+      .subscribe({
+        next: (results) => {
           this.searchResults = results;
           this.isLoading = false;
         },
-        (error) => {
+        error: (error) => {
           console.error('Error al realizar la búsqueda:', error);
           this.isLoading = false;
-        }
-      );
+        },
+      });
   }
 
   onSearchChange() {
