@@ -6,11 +6,18 @@ const routes: Routes = [
   {
     path: '',
     component: TrendingTabPage,
-  }
+  },
+  {
+    path: 'details/:media_type/:id',
+    loadChildren: () =>
+      import('../../pages/resource-details/resource-details.module').then(
+        (m) => m.ResourceDetailsPageModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TrendingTabPageRoutingModule {}
+export class TrendingTabPageRoutingModule { }

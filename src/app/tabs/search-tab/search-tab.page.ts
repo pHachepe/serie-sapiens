@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MoviedbService } from 'src/app/api/moviedb.service';
 import { ApiResult } from 'src/app/models/result.model';
+import { CurrentTabService } from 'src/app/services/current-tab.service';
 
 @Component({
   selector: 'app-search-tab',
@@ -15,9 +16,15 @@ export class SearchTabPage implements OnInit {
   isLoading = false;
   private searchSubject = new Subject<string>();
 
-  constructor(private router: Router, private moviedbService: MoviedbService) {}
+  constructor(
+    private navCtrl: NavController,
+    private currentTabService: CurrentTabService,
+    private moviedbService: MoviedbService
+  ) { }
 
   ngOnInit() {
+    this.currentTabService.setCurrentTab('searchtab');
+
     this.searchSubject
       .pipe(
         debounceTime(500), // Espera 500ms después de cada cambio
@@ -48,6 +55,6 @@ export class SearchTabPage implements OnInit {
   }
 
   openDetails(item: any) {
-    this.router.navigate(['/tabs/details', item.media_type, item.id]);
+    this.navCtrl.navigateForward(['tabs/searchtab/details', item.media_type, item.id]);
   }
 }

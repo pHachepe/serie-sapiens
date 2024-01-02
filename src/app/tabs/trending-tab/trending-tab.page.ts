@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { MoviedbService } from '../../api/moviedb.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { Result } from '../../models/result.model';
 import { finalize, map } from 'rxjs/operators';
+import { CurrentTabService } from 'src/app/services/current-tab.service';
+import { MoviedbService } from '../../api/moviedb.service';
+import { Result } from '../../models/result.model';
 
 @Component({
   selector: 'app-trending-tab',
@@ -20,12 +21,15 @@ export class TrendingTabPage implements OnInit {
   topTenRatedDocumentaries$!: Observable<Result[]>;
 
   constructor(
+    private loadingCtrl: LoadingController,
+    private currentTabService: CurrentTabService,
     private moviedbService: MoviedbService,
-    private loadingCtrl: LoadingController
   ) { }
 
   async ngOnInit() {
     const loading = await this.presentLoading();
+
+    this.currentTabService.setCurrentTab('trendingtab');
 
     this.topTenTrendingMovies$ = this.moviedbService.getTrendingMovies().pipe(
       map((response) =>
