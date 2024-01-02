@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { fadeInOutAnimation } from 'src/animations';
 import { MoviedbService } from 'src/app/api/moviedb.service';
 import { ApiResult } from 'src/app/models/result.model';
 import { CurrentTabService } from 'src/app/services/current-tab.service';
@@ -9,6 +10,7 @@ import { CurrentTabService } from 'src/app/services/current-tab.service';
 @Component({
   selector: 'app-search-tab',
   templateUrl: './search-tab.page.html',
+  animations: [fadeInOutAnimation],
 })
 export class SearchTabPage implements OnInit {
   searchQuery: string = '';

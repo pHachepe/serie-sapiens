@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content class="bg-gray-100 dark:bg-gray-800">
-  <div>
+  <div [@fadeInOut]>
     <ion-searchbar class="flex-grow mb-2" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
       (ionChange)="onSearchChange()"></ion-searchbar>
 

@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize, map } from 'rxjs/operators';
+import { fadeInOutAnimation } from 'src/animations';
 import { CurrentTabService } from 'src/app/services/current-tab.service';
 import { MoviedbService } from '../../api/moviedb.service';
 import { Result } from '../../models/result.model';
 
 @Component({
   selector: 'app-trending-tab',
-  templateUrl: 'trending-tab.page.html'
+  templateUrl: 'trending-tab.page.html',
+  animations: [fadeInOutAnimation],
 })
 export class TrendingTabPage implements OnInit {
   topTenTrendingMovies$!: Observable<Result[]>;
