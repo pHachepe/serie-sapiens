@@ -8,6 +8,7 @@ import { MoviedbService } from 'src/app/api/moviedb.service';
 import { MediaType } from 'src/app/models/media-types.model';
 import { Result } from 'src/app/models/result.model';
 import { Video } from 'src/app/models/video.model';
+import { UserListService } from 'src/app/services/user-list/user-list.service';
 
 @Component({
   selector: 'app-resource-details',
@@ -23,104 +24,61 @@ export class ResourceDetailsPage implements OnInit {
   buyProviders$!: Observable<any[]>;
   recommendations$!: Observable<Result[]>;
 
+  isWatched = false;
+  isPending = false;
+  isFavorite = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private moviedbService: MoviedbService
+    private moviedbService: MoviedbService,
+    private userListService: UserListService,
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap
-      .pipe(
-        switchMap((params) => {
-          this.id = Number(params.get('id'));
-          this.media_type = params.get('media_type') as MediaType;
+    this.activatedRoute.paramMap.pipe(
+      switchMap((params) => {
+        this.id = Number(params.get('id'));
+        this.media_type = params.get('media_type') as MediaType;
+        if (!this.id || !this.media_type) throw new Error('No ID or media type available');
 
-          if (!this.id || !this.media_type) {
-            throw new Error('No ID or media type available');
-          }
+        const details$ = this.moviedbService.getDetails(this.id, this.media_type);
+        const trailers$ = this.moviedbService.getTrailers(this.id, this.media_type);
+        const providers$ = this.moviedbService.getProviders(this.id, this.media_type);
+        const recommendations$ = this.moviedbService.getRecommendations(this.id, this.media_type)
+          .pipe(map(response => response.results.filter(result => result.poster_path)));
 
-          const details$ = this.moviedbService.getDetails(
-            this.id,
-            this.media_type
-          );
-          const trailers$ = this.moviedbService.getTrailers(
-            this.id,
-            this.media_type
-          );
-          const providers$ = this.moviedbService.getProviders(
-            this.id,
-            this.media_type
-          );
-
-          this.recommendations$ = this.moviedbService
-            .getRecommendations(this.id, this.media_type)
-            .pipe(
-              map((response) =>
-                response.results.map((result) => ({
-                  ...result,
-                  media_type: this.media_type,
-                }))
-              )
-              //finalize(() => loading.dismiss())
-            );
-
-          return forkJoin({
-            details: details$,
-            trailers: trailers$,
-            providers: providers$,
-          });
-        }),
-        switchMap(({ details, trailers, providers }) => {
-          if (!trailers.results.length) {
-            // Si no hay trailers, buscar trailers en inglés
-            return forkJoin({
-              details: of(details),
-              trailers: this.moviedbService.getTrailers(
-                details.id,
-                this.media_type,
-                'en-US'
-              ),
-              providers: of(providers),
-            });
-          }
-          return of({ details, trailers, providers });
-        }),
-        tap(({ details, trailers, providers }) => {
-          if (details) {
-            this.resultDetails = details;
-            this.showTrailer(trailers.results);
-            this.flatrateProviders$ = of(providers).pipe(
-              map((providersData) => providersData?.flatrate || [])
-            );
-            this.rentProviders$ = of(providers).pipe(
-              map((providersData) => providersData?.rent || [])
-            );
-            this.buyProviders$ = of(providers).pipe(
-              map((providersData) => providersData?.buy || [])
-            );
-          }
-        }),
-        catchError((error) => {
-          console.error('Error fetching details:', error);
-          return of(null);
-        })
-      )
-      .subscribe();
+        return forkJoin({ details: details$, trailers: trailers$, providers: providers$, recommendations: recommendations$ });
+      }),
+      switchMap(({ details, trailers, providers, recommendations }) => {
+        if (!trailers.results.length) {
+          return forkJoin({ details: of(details), trailers: this.moviedbService.getTrailers(details.id, this.media_type, 'en-US'), providers: of(providers), recommendations: of(recommendations) });
+        }
+        return of({ details, trailers, providers, recommendations });
+      }),
+      tap(({ details, trailers, providers, recommendations }) => {
+        if (details) {
+          this.resultDetails = details;
+          this.showTrailer(trailers.results);
+          this.flatrateProviders$ = of(providers).pipe(map(providersData => providersData?.flatrate || []));
+          this.rentProviders$ = of(providers).pipe(map(providersData => providersData?.rent || []));
+          this.buyProviders$ = of(providers).pipe(map(providersData => providersData?.buy || []));
+          this.recommendations$ = of(recommendations);
+          this.checkItemStatus(); // Checking if the item is in watched, pending, or favorite list
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching details:', error);
+        return of(null);
+      })
+    ).subscribe();
   }
 
   showTrailer(videos: Video[]) {
-    if (videos && videos.length > 0) {
-      const trailer =
-        videos.find((video) => video.type === 'Trailer' && video.key) ||
-        videos.find((video) => video.key);
-      if (trailer) {
-        const videoUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1`;
-        this.trailerUrlSafe =
-          this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
-      } else {
-        this.trailerUrlSafe = null;
-      }
+    const trailer = videos.find(video => video.type === 'Trailer' && video.key) || videos.find(video => video.key);
+    if (trailer) {
+      const videoUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1`;
+      this.trailerUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
     } else {
       this.trailerUrlSafe = null;
     }
@@ -128,44 +86,30 @@ export class ResourceDetailsPage implements OnInit {
 
   async shareContent() {
     try {
-      let shareMessage =
-        'Mira ' +
-        (this.resultDetails?.title || this.resultDetails?.name) +
-        ' en SerieSapiens: \n';
-      let shareUrl =
-        'https://seriesapiens.com/' +
-        this.resultDetails?.media_type +
-        '/' +
-        this.resultDetails?.id;
-
-      const imageUrl =
-        this.resultDetails?.backdrop_path || this.resultDetails?.poster_path;
-      if (imageUrl) {
-        shareUrl += '\n\nhttps://image.tmdb.org/t/p/w500' + imageUrl;
-      }
-
-      await Share.share({
-        title: this.resultDetails?.title || this.resultDetails?.name,
-        text: shareMessage,
-        url: shareUrl,
-        dialogTitle: 'Compartir contenido',
-      });
-
+      let shareMessage = 'Mira ' + (this.resultDetails?.title || this.resultDetails?.name) + ' en SerieSapiens: \n';
+      let shareUrl = 'https://seriesapiens.com/' + this.resultDetails?.media_type + '/' + this.resultDetails?.id;
+      const imageUrl = this.resultDetails?.backdrop_path || this.resultDetails?.poster_path;
+      if (imageUrl) shareUrl += '\n\nhttps://image.tmdb.org/t/p/w500' + imageUrl;
+      await Share.share({ title: this.resultDetails?.title || this.resultDetails?.name, text: shareMessage, url: shareUrl, dialogTitle: 'Compartir contenido' });
       console.log('Contenido compartido con éxito');
     } catch (error) {
       console.error('Error al compartir:', error);
     }
   }
 
-  addToPending() {
-    throw new Error('Method not implemented.');
+  toggleInList(list: 'watched' | 'pending' | 'favorites') {
+    if (this.resultDetails) {
+      this.userListService.toggleItemInList(list, this.resultDetails.id);
+      this.checkItemStatus();
+    }
   }
 
-  addToFavorites() {
-    throw new Error('Method not implemented.');
-  }
-
-  addToWatched() {
-    throw new Error('Method not implemented.');
+  checkItemStatus() {
+    if (this.resultDetails) {
+      const itemId = this.resultDetails.id;
+      this.isWatched = this.userListService.isInList('watched', itemId);
+      this.isPending = this.userListService.isInList('pending', itemId);
+      this.isFavorite = this.userListService.isInList('favorites', itemId);
+    }
   }
 }
