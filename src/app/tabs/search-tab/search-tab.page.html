@@ -6,10 +6,13 @@
 
 <ion-content class="bg-gray-100 dark:bg-gray-800">
   <div>
-    <ion-searchbar class="flex-grow" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
-      (ionChange)="onSearch()" debounce="500"></ion-searchbar>
+    <ion-searchbar class="flex-grow mb-2" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
+      (ionChange)="onSearchChange()"></ion-searchbar>
 
-    <div *ngIf="isLoading" class="text-center p-4 text-lg text-gray-800 dark:text-gray-200">Cargando...</div>
+    <div *ngIf="isLoading" class="text-center">
+      <ion-spinner></ion-spinner> Cargando...
+    </div>
+
     <div *ngIf="!isLoading && searchResults?.results?.length === 0"
       class="text-center p-4 text-lg text-gray-800 dark:text-gray-200">No se encontraron resultados</div>
 
