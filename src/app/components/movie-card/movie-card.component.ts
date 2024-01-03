@@ -11,6 +11,7 @@ import { ResultDataService } from 'src/app/services/result-data/result-data.serv
 })
 export class MovieCardComponent {
   @Input() result!: Result;
+  loading = true;
 
   constructor(
     private navCtrl: NavController,
