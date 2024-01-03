@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import { CurrentTabService } from '../services/current-tab.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+  constructor(private currentTabService: CurrentTabService) {}
 
-  constructor() {}
-
+  onTabsChange(tabName: string) {
+    this.currentTabService.setCurrentTab(tabName);
+  }
 }
