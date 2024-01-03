@@ -32,9 +32,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'tab3',
+        path: 'userliststab',
         loadChildren: () =>
-          import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+          import('./user-lists-tab/user-lists-tab.module').then(
+            (m) => m.UserListsTabPageModule
+          ),
       },
       {
         path: 'settingstab',
