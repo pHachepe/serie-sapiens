@@ -1,133 +1,138 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ resultDetails?.title || resultDetails?.name || 'Detalles' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="resultDetails">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ resultDetails.title || resultDetails.name || 'Detalles' }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="bg-black">
-  <!-- Trailer -->
-  <iframe *ngIf="trailerUrlSafe" [src]="trailerUrlSafe" class="w-full h-64" frameborder="0" allowfullscreen></iframe>
-  <!-- Si no hay tráiler, mostrar poster -->
-  <img *ngIf="!trailerUrlSafe && resultDetails?.poster_path"
-    [src]="'https://image.tmdb.org/t/p/w500' + resultDetails?.poster_path" class="w-full h-64 object-cover"
-    alt="Backdrop">
+  <ion-content class="bg-black">
+    <!-- Trailer -->
+    <iframe *ngIf="trailerUrlSafe" [src]="trailerUrlSafe" class="w-full h-64" frameborder="0" allowfullscreen></iframe>
+    <!-- Si no hay tráiler, mostrar poster -->
+    <img *ngIf="!trailerUrlSafe && resultDetails?.poster_path"
+      [src]="'https://image.tmdb.org/t/p/w500' + resultDetails.poster_path" class="w-full h-64 object-cover"
+      alt="Backdrop">
 
-  <!-- Fila de iconos para acciones -->
-  <div class="flex dark:bg-neutral-900 ">
-    <ion-button fill="clear" (click)="toggleInList('watched')" [ngClass]="{'bg-green-500 text-white': isWatched}"
-      class="m-0 dark:text-white text-black text-xs/8">
-      <ion-icon slot="icon-only" name="eye" class="pr-1"></ion-icon>Vista
-    </ion-button>
-    <ion-button fill="clear" (click)="toggleInList('pending')" [ngClass]="{'bg-blue-500 text-white': isPending}"
-      class="m-0 dark:text-white text-black text-xs/8">
-      <ion-icon slot="icon-only" name="time" class="pr-1"></ion-icon>Pendiente
-    </ion-button>
-    <ion-button fill="clear" (click)="toggleInList('favorites')" [ngClass]="{'bg-red-500 text-white': isFavorite}"
-      class="m-0 dark:text-white text-black text-xs/8">
-      <ion-icon slot="icon-only" name="heart" class="pr-1"></ion-icon>Favorita
-    </ion-button>
-    <ion-button fill="clear" (click)="shareContent()" class="m-0 dark:text-white text-black text-xs/8 w-full">
-      <ion-icon slot="icon-only" name="share-social" class="pr-1"></ion-icon>
-    </ion-button>
-  </div>
-
-  <!-- Contenido debajo del tráiler -->
-  <div class="relative" *ngIf="resultDetails">
-    <!-- Degradado superior -->
-    <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
-      class="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-neutral-800"></div>
-
-    <!-- Fondo del póster con opacidad -->
-    <img *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
-      [src]="'https://image.tmdb.org/t/p/w500' + (resultDetails.backdrop_path || resultDetails.poster_path)"
-      class="absolute top-0 w-full h-full object-cover opacity-70" alt="Poster">
-
-    <!-- Degradado inferior -->
-    <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
-      class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-neutral-800"></div>
-
-    <!-- Contenedor de detalles con fondo semitransparente -->
-    <div class="relative bg-black bg-opacity-60 px-4 pt-2 text-white">
-      <h2 class="text-2xl font-bold mb-2">{{ resultDetails.title || resultDetails.name }}</h2>
-      <p class="text-sm mb-2">{{ resultDetails.overview }}</p>
-
-      <div class="flex items-center mb-2" *ngIf="resultDetails.release_date || resultDetails.first_air_date">
-        <ion-icon name="calendar" class="mr-2"></ion-icon>
-        <span>Fecha de estreno: {{ (resultDetails.release_date || resultDetails.first_air_date) |
-          date:'dd/MM/yyyy':'es-ES' }}</span>
-      </div>
-
-      <div class="flex items-center mb-2" *ngIf="resultDetails.vote_average">
-        <ion-icon name="star" class="mr-2"></ion-icon>
-        <span>Calificación: {{ resultDetails.vote_average | number:'1.1-1':'es-ES' }}/10</span>
-      </div>
-
-      <div class="flex items-center mb-2" *ngIf="resultDetails.vote_count">
-        <ion-icon name="people" class="mr-2"></ion-icon>
-        <span>Recuento de votos: {{ resultDetails.vote_count | number:'1.0-0':'es-ES' }}</span>
-      </div>
-
-      <div class="flex items-center mb-2" *ngIf="resultDetails.runtime">
-        <ion-icon name="time" class="mr-2"></ion-icon>
-        <span>Duración: {{ resultDetails.runtime | number:'1.0-0':'es-ES' }} minutos</span>
-      </div>
+    <!-- Fila de iconos para acciones -->
+    <div class="flex dark:bg-neutral-900 ">
+      <ion-button fill="clear" (click)="toggleInList('watched')" [ngClass]="{'bg-green-500 text-white': isWatched}"
+        class="m-0 dark:text-white text-black text-xs/8">
+        <ion-icon slot="icon-only" name="eye" class="pr-1"></ion-icon>Vista
+      </ion-button>
+      <ion-button fill="clear" (click)="toggleInList('pending')" [ngClass]="{'bg-blue-500 text-white': isPending}"
+        class="m-0 dark:text-white text-black text-xs/8">
+        <ion-icon slot="icon-only" name="time" class="pr-1"></ion-icon>Pendiente
+      </ion-button>
+      <ion-button fill="clear" (click)="toggleInList('favorites')" [ngClass]="{'bg-red-500 text-white': isFavorite}"
+        class="m-0 dark:text-white text-black text-xs/8">
+        <ion-icon slot="icon-only" name="heart" class="pr-1"></ion-icon>Favorita
+      </ion-button>
+      <ion-button fill="clear" (click)="shareContent()" class="m-0 dark:text-white text-black text-xs/8 w-full">
+        <ion-icon slot="icon-only" name="share-social" class="pr-1"></ion-icon>
+      </ion-button>
     </div>
-  </div>
 
-  <!-- Mensaje si no hay detalles disponibles -->
-  <div *ngIf="!resultDetails" class="flex justify-center items-center h-64">
-    <p>No hay detalles disponibles para mostrar.</p>
-  </div>
+    <!-- Contenido debajo del tráiler -->
+    <div class="relative" *ngIf="resultDetails">
+      <!-- Degradado superior -->
+      <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
+        class="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-neutral-800"></div>
 
-  <!-- Fila de iconos de flatrate, buy y rent alignados a la izquierda -->
-  <section class="flex flex-wrap justify-start items-center px-4">
-    <!-- Proveedores de Streaming (Flatrate) -->
-    <div *ngIf="(flatrateProviders$ | async)?.length" class="w-full">
-      <div class="flex items-center">
-        <ion-icon name="play-circle" class="mr-2"></ion-icon>
-        <h3>Disponible para streaming en:</h3>
-      </div>
-      <div class="flex flex-wrap">
-        <ion-button fill="clear" *ngFor="let provider of flatrateProviders$ | async" class="m-0 my-1">
-          <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8" alt="{{ provider.provider_name }}">
-        </ion-button>
+      <!-- Fondo del póster con opacidad -->
+      <img *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
+        [src]="'https://image.tmdb.org/t/p/w500' + (resultDetails.backdrop_path || resultDetails.poster_path)"
+        class="absolute top-0 w-full h-full object-cover opacity-70" alt="Poster">
+
+      <!-- Degradado inferior -->
+      <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
+        class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-neutral-800"></div>
+
+      <!-- Contenedor de detalles con fondo semitransparente -->
+      <div class="relative bg-black bg-opacity-60 px-4 pt-2 text-white">
+        <h2 class="text-2xl font-bold mb-2">{{ resultDetails.title || resultDetails.name }}</h2>
+        <p class="text-sm mb-2">{{ resultDetails.overview }}</p>
+
+        <div class="flex items-center mb-2" *ngIf="resultDetails.release_date || resultDetails.first_air_date">
+          <ion-icon name="calendar" class="mr-2"></ion-icon>
+          <span>Fecha de estreno: {{ (resultDetails.release_date || resultDetails.first_air_date) |
+            date:'dd/MM/yyyy':'es-ES' }}</span>
+        </div>
+
+        <div class="flex items-center mb-2" *ngIf="resultDetails.vote_average">
+          <ion-icon name="star" class="mr-2"></ion-icon>
+          <span>Calificación: {{ resultDetails.vote_average | number:'1.1-1':'es-ES' }}/10</span>
+        </div>
+
+        <div class="flex items-center mb-2" *ngIf="resultDetails.vote_count">
+          <ion-icon name="people" class="mr-2"></ion-icon>
+          <span>Recuento de votos: {{ resultDetails.vote_count | number:'1.0-0':'es-ES' }}</span>
+        </div>
+
+        <div class="flex items-center mb-2" *ngIf="resultDetails.runtime">
+          <ion-icon name="time" class="mr-2"></ion-icon>
+          <span>Duración: {{ resultDetails.runtime | number:'1.0-0':'es-ES' }} minutos</span>
+        </div>
       </div>
     </div>
 
-    <!-- Proveedores de Alquiler (Rent) -->
-    <div *ngIf="(rentProviders$ | async)?.length" class="w-full">
-      <div class="flex items-center">
-        <ion-icon name="pricetags" class="mr-2"></ion-icon>
-        <h3>Disponible para alquiler en:</h3>
-      </div>
-      <div class="flex flex-wrap">
-        <ion-button fill="clear" *ngFor="let provider of rentProviders$ | async" class="m-0 my-1">
-          <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8" alt="{{ provider.provider_name }}">
-        </ion-button>
-      </div>
+    <!-- Mensaje si no hay detalles disponibles -->
+    <div *ngIf="!resultDetails" class="flex justify-center items-center h-64">
+      <p>No hay detalles disponibles para mostrar.</p>
     </div>
 
-    <!-- Proveedores de Compra (Buy) -->
-    <div *ngIf="(buyProviders$ | async)?.length" class="w-full">
-      <div class="flex items-center">
-        <ion-icon name="cart" class="mr-2"></ion-icon>
-        <h3>Disponible para compra en:</h3>
+    <!-- Fila de iconos de flatrate, buy y rent alignados a la izquierda -->
+    <section class="flex flex-wrap justify-start items-center px-4">
+      <!-- Proveedores de Streaming (Flatrate) -->
+      <div *ngIf="(flatrateProviders$ | async)?.length" class="w-full">
+        <div class="flex items-center">
+          <ion-icon name="play-circle" class="mr-2"></ion-icon>
+          <h3>Disponible para streaming en:</h3>
+        </div>
+        <div class="flex flex-wrap">
+          <ion-button fill="clear" *ngFor="let provider of flatrateProviders$ | async" class="m-0 my-1">
+            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}">
+          </ion-button>
+        </div>
       </div>
-      <div class="flex flex-wrap">
-        <ion-button fill="clear" *ngFor="let provider of buyProviders$ | async" class="m-0 my-1">
-          <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8" alt="{{ provider.provider_name }}">
-        </ion-button>
+
+      <!-- Proveedores de Alquiler (Rent) -->
+      <div *ngIf="(rentProviders$ | async)?.length" class="w-full">
+        <div class="flex items-center">
+          <ion-icon name="pricetags" class="mr-2"></ion-icon>
+          <h3>Disponible para alquiler en:</h3>
+        </div>
+        <div class="flex flex-wrap">
+          <ion-button fill="clear" *ngFor="let provider of rentProviders$ | async" class="m-0 my-1">
+            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}">
+          </ion-button>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <ng-container *ngIf="recommendations$ | async as recommendations">
-    <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones">
-    </app-swiper>
-  </ng-container>
+      <!-- Proveedores de Compra (Buy) -->
+      <div *ngIf="(buyProviders$ | async)?.length" class="w-full">
+        <div class="flex items-center">
+          <ion-icon name="cart" class="mr-2"></ion-icon>
+          <h3>Disponible para compra en:</h3>
+        </div>
+        <div class="flex flex-wrap">
+          <ion-button fill="clear" *ngFor="let provider of buyProviders$ | async" class="m-0 my-1">
+            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}">
+          </ion-button>
+        </div>
+      </div>
+    </section>
 
-  <div class="ion-padding-bottom"></div>
-</ion-content>
+    <ng-container *ngIf="recommendations$ | async as recommendations">
+      <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones">
+      </app-swiper>
+    </ng-container>
+
+    <div class="ion-padding-bottom"></div>
+  </ion-content>
+</ng-container>
