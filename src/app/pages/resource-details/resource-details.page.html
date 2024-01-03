@@ -1,14 +1,7 @@
 <ng-container *ngIf="resultDetails">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ resultDetails.title || resultDetails.name || 'Detalles' }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-header [title]="resultDetails.title || resultDetails.name || 'Detalles'" [showBackButton]=true></app-header>
 
-  <ion-content class="bg-black">
+  <ion-content class="bg-black fade-in">
     <!-- Trailer -->
     <iframe *ngIf="trailerUrlSafe" [src]="trailerUrlSafe" class="w-full h-64" frameborder="0" allowfullscreen></iframe>
     <!-- Si no hay tráiler, mostrar poster -->
