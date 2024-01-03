@@ -3,11 +3,10 @@ import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  selector: 'app-settings-tab',
+  templateUrl: 'settings-tab.page.html',
 })
-export class Tab1Page {
+export class SettingsTabPage {
   themeToggle = false;
 
   constructor() {

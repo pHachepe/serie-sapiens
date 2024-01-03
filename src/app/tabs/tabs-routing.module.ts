@@ -25,11 +25,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'tab1',
-        loadChildren: () =>
-          import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
-      },
-      {
         path: 'trendingtab',
         loadChildren: () =>
           import('./trending-tab/trending-tab.module').then(
@@ -40,6 +35,11 @@ const routes: Routes = [
         path: 'tab3',
         loadChildren: () =>
           import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+      },
+      {
+        path: 'settingstab',
+        loadChildren: () =>
+          import('./settings-tab/settings-tab.module').then((m) => m.SettingsTabPageModule),
       },
     ],
   },
