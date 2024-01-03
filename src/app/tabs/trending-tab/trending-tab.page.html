@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<ion-content [fullscreen]="true" class="fade-in">
+<ion-content class="fade-in">
   <!-- Top 10 Películas en Tendencia -->
   <app-top-swiper *ngIf="topTenTrendingMovies$ | async as topTenTrendingMovies" [items]="topTenTrendingMovies"
     title="Top 10 Películas en Tendencia"></app-top-swiper>
