@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { fadeInOutAnimation } from 'src/animations';
 import { MoviedbService } from 'src/app/api/moviedb.service';
 import { ApiResult } from 'src/app/models/result.model';
-import { CurrentTabService } from 'src/app/services/current-tab.service';
 
 @Component({
   selector: 'app-search-tab',
   templateUrl: './search-tab.page.html',
-  animations: [fadeInOutAnimation],
 })
 export class SearchTabPage implements OnInit {
   searchQuery: string = '';
@@ -20,13 +17,10 @@ export class SearchTabPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private currentTabService: CurrentTabService,
     private moviedbService: MoviedbService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.currentTabService.setCurrentTab('searchtab');
-
     this.searchSubject
       .pipe(
         debounceTime(500), // Espera 500ms después de cada cambio
@@ -57,6 +51,10 @@ export class SearchTabPage implements OnInit {
   }
 
   openDetails(item: any) {
-    this.navCtrl.navigateForward(['tabs/searchtab/details', item.media_type, item.id]);
+    this.navCtrl.navigateForward([
+      'tabs/searchtab/details',
+      item.media_type,
+      item.id,
+    ]);
   }
 }
