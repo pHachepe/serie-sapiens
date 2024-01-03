@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'tab1',
         loadChildren: () =>
-          import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
+          import('./tab1/tab1.module').then((m) => m.Tab1PageModule),
       },
       {
         path: 'trendingtab',
