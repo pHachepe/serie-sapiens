@@ -1,38 +1,36 @@
 <app-header></app-header>
 
-<ion-content [fullscreen]="true">
-  <div [@fadeInOut]>
-    <!-- Top 10 Películas en Tendencia -->
-    <app-top-swiper *ngIf="topTenTrendingMovies$ | async as topTenTrendingMovies" [items]="topTenTrendingMovies"
-      title="Top 10 Películas en Tendencia"></app-top-swiper>
+<ion-content [fullscreen]="true" class="fade-in">
+  <!-- Top 10 Películas en Tendencia -->
+  <app-top-swiper *ngIf="topTenTrendingMovies$ | async as topTenTrendingMovies" [items]="topTenTrendingMovies"
+    title="Top 10 Películas en Tendencia"></app-top-swiper>
 
-    <!-- Películas Populares -->
-    <app-swiper *ngIf="popularMovies$ | async as popularMovies" [items]="popularMovies"
-      title="Películas + Populares"></app-swiper>
+  <!-- Películas Populares -->
+  <app-swiper *ngIf="popularMovies$ | async as popularMovies" [items]="popularMovies"
+    title="Películas + Populares"></app-swiper>
 
-    <!-- Top 10 Series en Tendencia -->
-    <app-top-swiper *ngIf="topTenTrendingSeries$ | async as topTenTrendingSeries" [items]="topTenTrendingSeries"
-      title="Top 10 Series en Tendencia"></app-top-swiper>
+  <!-- Top 10 Series en Tendencia -->
+  <app-top-swiper *ngIf="topTenTrendingSeries$ | async as topTenTrendingSeries" [items]="topTenTrendingSeries"
+    title="Top 10 Series en Tendencia"></app-top-swiper>
 
-    <!-- Series Populares -->
-    <app-swiper *ngIf="popularSeries$ | async as popularSeries" [items]="popularSeries"
-      title="Series + Populares"></app-swiper>
+  <!-- Series Populares -->
+  <app-swiper *ngIf="popularSeries$ | async as popularSeries" [items]="popularSeries"
+    title="Series + Populares"></app-swiper>
 
-    <!-- Documentales Populares -->
-    <app-swiper *ngIf="popularDocumentaries$ | async as popularDocumentaries" [items]="popularDocumentaries"
-      title="Documentales + Populares"></app-swiper>
+  <!-- Documentales Populares -->
+  <app-swiper *ngIf="popularDocumentaries$ | async as popularDocumentaries" [items]="popularDocumentaries"
+    title="Documentales + Populares"></app-swiper>
 
-    <!-- Top 10 Películas Mejor Valoradas -->
-    <app-top-swiper *ngIf="topTenRatedMovies$ | async as topTenRatedMovies" [items]="topTenRatedMovies"
-      title="Top 10 Películas Mejor Valoradas"></app-top-swiper>
+  <!-- Top 10 Películas Mejor Valoradas -->
+  <app-top-swiper *ngIf="topTenRatedMovies$ | async as topTenRatedMovies" [items]="topTenRatedMovies"
+    title="Top 10 Películas Mejor Valoradas"></app-top-swiper>
 
-    <!-- Top 10 Series Mejor Valoradas -->
-    <app-top-swiper *ngIf="topTenRatedSeries$ | async as topTenRatedSeries" [items]="topTenRatedSeries"
-      title="Top 10 Series Mejor Valoradas"></app-top-swiper>
+  <!-- Top 10 Series Mejor Valoradas -->
+  <app-top-swiper *ngIf="topTenRatedSeries$ | async as topTenRatedSeries" [items]="topTenRatedSeries"
+    title="Top 10 Series Mejor Valoradas"></app-top-swiper>
 
-    <!-- Top 10 Documentales Mejor Valorados -->
-    <app-top-swiper *ngIf="topTenRatedDocumentaries$ | async as topTenRatedDocumentaries"
-      [items]="topTenRatedDocumentaries" title="Top 10 Documentales"></app-top-swiper>
-    <div class="ion-padding-bottom"></div>
-  </div>
+  <!-- Top 10 Documentales Mejor Valorados -->
+  <app-top-swiper *ngIf="topTenRatedDocumentaries$ | async as topTenRatedDocumentaries"
+    [items]="topTenRatedDocumentaries" title="Top 10 Documentales"></app-top-swiper>
+  <div class="ion-padding-bottom"></div>
 </ion-content>
