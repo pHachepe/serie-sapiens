@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, NgModule, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
@@ -7,15 +8,16 @@ import { IonicModule } from '@ionic/angular';
 })
 export class HeaderComponent implements OnInit {
   @Input() title: string = 'SerieSapiens';
+  @Input() showBackButton: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }
 
 @NgModule({
-  imports: [IonicModule],
+  imports: [IonicModule, CommonModule],
   declarations: [HeaderComponent],
   exports: [HeaderComponent],
 })
-export class HeaderModule {}
+export class HeaderModule { }
