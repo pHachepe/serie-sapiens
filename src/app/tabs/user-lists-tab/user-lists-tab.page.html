@@ -1,7 +1,14 @@
 <app-header title="Listas" class="header-fade-in"></app-header>
 
 <ion-content class="fade-in">
-  <app-swiper *ngIf="pendingList$ | async as pendingList" [items]="pendingList" title="Pendientes"></app-swiper>
-  <app-swiper *ngIf="favoritesList$ | async as favoritesList" [items]="favoritesList" title="Favoritas"></app-swiper>
-  <app-swiper *ngIf="watchedList$ | async as watchedList" [items]="watchedList" title="Vistas"></app-swiper>
+  <app-swiper *ngIf="pendingList$ | async as pendingList" [items]="pendingList" title="Pendientes"
+    #pendingSwiper></app-swiper>
+
+  <app-swiper *ngIf="favoritesList$ | async as favoritesList" [items]="favoritesList" title="Favoritas"
+    #favoritesSwiper></app-swiper>
+
+  <app-swiper *ngIf="watchedList$ | async as watchedList" [items]="watchedList" title="Vistas"
+    #watchedSwiper></app-swiper>
+
+  <div class="ion-padding-bottom"></div>
 </ion-content>

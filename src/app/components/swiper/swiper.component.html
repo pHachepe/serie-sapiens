@@ -1,9 +1,11 @@
 <div class="px-4 pt-4">
   <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
-  <swiper-container *ngIf="items.length > 0" [slidesPerView]="2.3" [spaceBetween]="10" free-mode="true" [loop]="true">
-    <!--  autoplay="true" [speed]="1000" [delay]="3000" -->
-    <swiper-slide *ngFor="let item of items" class="flex-shrink-0 w-52">
-      <app-movie-card [result]="item"></app-movie-card>
-    </swiper-slide>
-  </swiper-container>
+  <ng-container *ngIf="items && items.length">
+    <swiper-container class="swiper-container" [config]="config" #swiperRef>
+      <!--  autoplay="true" [speed]="1000" [delay]="3000" -->
+      <swiper-slide *ngFor="let item of items" class="flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6">
+        <app-movie-card [result]="item"></app-movie-card>
+      </swiper-slide>
+    </swiper-container>
+  </ng-container>
 </div>
