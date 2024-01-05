@@ -1,38 +1,36 @@
 <app-header title="Ajustes"></app-header>
 
 <ion-content class="fade-in">
-  <ion-list-header>Appearance</ion-list-header>
-  <ion-list [inset]="true">
+  <ion-list inset="true">
     <ion-item>
-      <ion-toggle [(ngModel)]="themeToggle" (ionChange)="toggleChange($event)" justify="space-between">Dark
-        Mode</ion-toggle>
+      <ion-toggle [(ngModel)]="isDarkMode" (ionChange)="onToggleDarkMode($event)">Dark Mode</ion-toggle>
     </ion-item>
   </ion-list>
 
-  <ion-list [inset]="true">
-    <ion-item [button]="true">Text Size</ion-item>
+  <ion-list inset="true">
     <ion-item>
-      <ion-toggle justify="space-between">Bold Text</ion-toggle>
-    </ion-item>
-  </ion-list>
-
-  <ion-list-header>Brightness</ion-list-header>
-  <ion-list [inset]="true">
-    <ion-item>
-      <ion-range value="40">
-        <ion-icon name="sunny-outline" slot="start"></ion-icon>
-        <ion-icon name="sunny" slot="end"></ion-icon>
+      <ion-label>Text Size</ion-label>
+      <ion-range [(ngModel)]="fontSizeLevel" (ionChange)="onFontSizeChange($event)" min="12" max="24">
+        <ion-icon slot="start" name="text-outline"></ion-icon>
+        <ion-icon slot="end" name="text"></ion-icon>
       </ion-range>
     </ion-item>
     <ion-item>
-      <ion-toggle justify="space-between" checked>True Tone</ion-toggle>
+      <ion-toggle [(ngModel)]="isBoldTextEnabled" (ionChange)="onToggleBoldText($event)"><span>Bold
+          Text</span></ion-toggle>
     </ion-item>
   </ion-list>
 
-  <ion-list [inset]="true">
-    <ion-item [button]="true">
-      <ion-label>Night Shift</ion-label>
-      <ion-text slot="end" color="medium">9:00 PM to 8:00 AM</ion-text>
+  <ion-list inset="true">
+    <ion-item>
+      <ion-label>Brightness</ion-label>
+      <ion-range [(ngModel)]="brightnessLevel" (ionChange)="onBrightnessChange($event)" min="30" max="100">
+        <ion-icon slot="start" name="sunny-outline"></ion-icon>
+        <ion-icon slot="end" name="sunny"></ion-icon>
+      </ion-range>
     </ion-item>
   </ion-list>
+
+  <ion-button expand="full" (click)="resetToDefaults()" class="ion-margin ion-padding">Restaurar Ajustes por
+    Defecto</ion-button>
 </ion-content>

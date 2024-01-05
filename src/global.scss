@@ -98,3 +98,36 @@ ion-item {
     transform: translateX(10px);
   }
 }
+
+// Settings
+:root {
+  --app-min-brightness: 0.40; // 40% minimum brightness
+  --app-brightness: 1; // Default to 100%
+  --text-base-size: 16px; // Base text size set via TypeScript
+  --text-large-size: 1.25rem; // Large text size
+}
+
+body {
+  opacity: calc(var(--app-min-brightness) + (var(--app-brightness) * (1 - var(--app-min-brightness))));
+}
+
+body,
+ion-content,
+ion-item,
+ion-label,
+.content,
+span,
+p {
+  font-size: var(--text-base-size); // Use the dynamically adjusted text size
+
+
+  // When .text-size-large is toggled on, adjust the font size
+  &.text-size-large {
+    font-size: var(--text-large-size);
+  }
+
+  // When .bold-text is toggled on, adjust the font weight
+  &.bold-text {
+    font-weight: bold;
+  }
+}
