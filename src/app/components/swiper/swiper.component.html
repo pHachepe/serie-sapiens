@@ -8,4 +8,12 @@
       </swiper-slide>
     </swiper-container>
   </ng-container>
+  <ng-container *ngIf="!items || !items.length">
+    <div class="flex items-center justify-center h-64 rounded-lg border-2 border-dashed border-black dark:border-white">
+      <div class="text-center">
+        <ion-icon name="alert-circle" class="text-5xl"></ion-icon>
+        <p class="text-lg font-bold">No se encontraron elementos</p>
+      </div>
+    </div>
+  </ng-container>
 </div>
