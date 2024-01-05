@@ -25,6 +25,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'sapienstab',
+        loadChildren: () =>
+          import('./sapiens-tab/sapiens-tab.module').then(
+            (m) => m.SapiensTabPageModule
+          ),
+      },
+      {
         path: 'trendingtab',
         loadChildren: () =>
           import('./trending-tab/trending-tab.module').then(
@@ -44,6 +51,10 @@ const routes: Routes = [
           import('./settings-tab/settings-tab.module').then((m) => m.SettingsTabPageModule),
       },
     ],
+  },
+  {
+    path: 'sapiens-tab',
+    loadChildren: () => import('./sapiens-tab/sapiens-tab.module').then(m => m.SapiensTabPageModule)
   },
 ];
 
