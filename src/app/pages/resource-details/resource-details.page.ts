@@ -113,7 +113,6 @@ export class ResourceDetailsPage implements OnInit, OnDestroy {
         url: shareUrl,
         dialogTitle: 'Compartir contenido',
       });
-      console.log('Contenido compartido con éxito');
     } catch (error) {
       console.error('Error al compartir:', error);
     }
