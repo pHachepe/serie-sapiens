@@ -5,7 +5,7 @@ import { TabsPage } from './tabs.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/tabs/trendingtab',
+    redirectTo: '/tabs/sapienstab',
     pathMatch: 'full',
   },
   {
