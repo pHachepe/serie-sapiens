@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   ElementRef,
@@ -10,41 +9,22 @@ import {
 } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Result } from 'src/app/models/result.model';
-import { SwiperOptions } from 'swiper/types';
 import { MovieCardModule } from '../movie-card/movie-card.component';
 
 @Component({
   selector: 'app-swiper',
   templateUrl: './swiper.component.html',
 })
-export class SwiperComponent implements AfterViewInit {
+export class SwiperComponent {
+  @Input() containerClass: string = '';
   @Input() title: string = '';
   @Input() items!: Result[];
   @ViewChild('swiperRef') swiperRef!: ElementRef;
 
-  public config: SwiperOptions = {
-    init: true,
-    freeMode: true,
-    centerInsufficientSlides: true,
-    spaceBetween: 15,
-    loop: true,
-  };
-
-  constructor() {}
-
-  ngAfterViewInit() {
-    this.updateConfig();
-  }
-
   public updateConfig() {
     if (this.swiperRef) {
-      this.config.slidesPerView = 3.3;
-      Object.assign(this.swiperRef?.nativeElement, this.config);
-      this.swiperRef?.nativeElement.initialize();
-
-      this.config.slidesPerView = 2.3;
-      Object.assign(this.swiperRef?.nativeElement, this.config);
-      this.swiperRef?.nativeElement.initialize();
+      Object.assign(this.swiperRef?.nativeElement, { slidesPerView: 3.3 });
+      Object.assign(this.swiperRef?.nativeElement, { slidesPerView: 2.3 });
     }
   }
 }
