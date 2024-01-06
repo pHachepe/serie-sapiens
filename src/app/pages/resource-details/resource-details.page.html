@@ -35,7 +35,7 @@
     <div class="relative" *ngIf="resultDetails">
       <!-- Degradado superior -->
       <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
-        class="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-neutral-800"></div>
+        class="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-neutral-600"></div>
 
       <!-- Fondo del póster con opacidad -->
       <img *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
@@ -44,7 +44,7 @@
 
       <!-- Degradado inferior -->
       <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
-        class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-neutral-800"></div>
+        class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-b from-transparent to-neutral-600"></div>
 
       <!-- Contenedor de detalles con fondo semitransparente -->
       <div class="relative bg-black bg-opacity-60 px-4 pt-2 text-white">
@@ -125,7 +125,7 @@
     </section>
 
     <ng-container *ngIf="recommendations$ | async as recommendations">
-      <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones">
+      <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones" containerClass="px-4">
       </app-swiper>
     </ng-container>
 
