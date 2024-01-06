@@ -1,9 +1,14 @@
 <ion-card class="rounded-lg overflow-hidden m-0">
   <ion-card-content class="p-0">
     <button ion-item (click)="goToDetail()" class="flex flex-col items-center space-y-4 w-full h-52">
+
+      <!-- Placeholder: Se muestra mientras la imagen está cargando y se ubica encima de la imagen -->
+      <div *ngIf="loading" class="animate-pulse bg-gray-500 w-full h-52 absolute"></div>
+
+      <!-- Imagen: Se carga pero es invisible inicialmente -->
       <ion-img [src]="'https://image.tmdb.org/t/p/w500' + result.poster_path" (ionImgDidLoad)="loading = false"
-        [style.opacity]="loading ? '0' : '1'" [class.animate-pulse]="loading" [class.bg-gray-500]="loading"
-        alt="{{ result.title }}" class="w-full h-52 object-cover rounded-t-md text-gray-500"></ion-img>
+        [style.opacity]="loading ? '0' : '1'" alt="{{ result.title }}" alt="{{ result.title }}"
+        class="w-full h-52 object-cover rounded-t-md text-gray-500"></ion-img>
     </button>
   </ion-card-content>
 </ion-card>
