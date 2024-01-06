@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.seriesapiens.app',
   appName: 'SerieSapiens',
   webDir: 'www',
   server: {
