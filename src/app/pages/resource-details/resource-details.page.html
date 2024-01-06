@@ -11,18 +11,21 @@
 
     <!-- Fila de iconos para acciones -->
     <div class="flex dark:bg-neutral-900 ">
-      <ion-button fill="clear" (click)="toggleInList('watched')" [ngClass]="{'bg-green-500 text-white': isWatched}"
-        class="m-0 dark:text-white text-black text-xs/8">
-        <ion-icon slot="icon-only" name="eye" class="pr-1"></ion-icon>Vista
-      </ion-button>
       <ion-button fill="clear" (click)="toggleInList('pending')" [ngClass]="{'bg-blue-500 text-white': isPending}"
         class="m-0 dark:text-white text-black text-xs/8">
         <ion-icon slot="icon-only" name="time" class="pr-1"></ion-icon>Pendiente
       </ion-button>
+
+      <ion-button fill="clear" (click)="toggleInList('watched')" [ngClass]="{'bg-green-500 text-white': isWatched}"
+        class="m-0 dark:text-white text-black text-xs/8">
+        <ion-icon slot="icon-only" name="eye" class="pr-1"></ion-icon>Vista
+      </ion-button>
+
       <ion-button fill="clear" (click)="toggleInList('favorites')" [ngClass]="{'bg-red-500 text-white': isFavorite}"
         class="m-0 dark:text-white text-black text-xs/8">
         <ion-icon slot="icon-only" name="heart" class="pr-1"></ion-icon>Favorita
       </ion-button>
+
       <ion-button fill="clear" (click)="shareContent()" class="m-0 dark:text-white text-black text-xs/8 w-full">
         <ion-icon slot="icon-only" name="share-social" class="pr-1"></ion-icon>
       </ion-button>
