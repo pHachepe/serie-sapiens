@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header title="Descubre"></app-header>
 
 <ion-content class="fade-in">
   <!-- Top 10 Películas en Tendencia -->
@@ -6,7 +6,7 @@
     title="Top 10 Películas en Tendencia"></app-top-swiper>
 
   <!-- Películas Populares -->
-  <app-swiper *ngIf="popularMovies$ | async as popularMovies" [items]="popularMovies"
+  <app-swiper *ngIf="popularMovies$ | async as popularMovies" [items]="popularMovies" containerClass="px-4 pt-4"
     title="Películas + Populares"></app-swiper>
 
   <!-- Top 10 Series en Tendencia -->
@@ -14,11 +14,11 @@
     title="Top 10 Series en Tendencia"></app-top-swiper>
 
   <!-- Series Populares -->
-  <app-swiper *ngIf="popularSeries$ | async as popularSeries" [items]="popularSeries"
+  <app-swiper *ngIf="popularSeries$ | async as popularSeries" [items]="popularSeries" containerClass="px-4 pt-4"
     title="Series + Populares"></app-swiper>
 
   <!-- Documentales Populares -->
-  <app-swiper *ngIf="popularDocumentaries$ | async as popularDocumentaries" [items]="popularDocumentaries"
+  <app-swiper *ngIf="popularDocumentaries$ | async as popularDocumentaries" [items]="popularDocumentaries" containerClass="px-4 pt-4"
     title="Documentales + Populares"></app-swiper>
 
   <!-- Top 10 Películas Mejor Valoradas -->
