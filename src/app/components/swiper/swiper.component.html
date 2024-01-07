@@ -3,7 +3,7 @@
   <ng-container *ngIf="items && items.length">
     <swiper-container class="swiper-container" #swiperRef [slidesPerView]="2.3" free-mode="true" [spaceBetween]="15"
       [loop]="true">
-      <swiper-slide *ngFor="let item of items">
+      <swiper-slide *ngFor="let item of items; trackBy: trackById">
         <app-movie-card [result]="item"></app-movie-card>
       </swiper-slide>
     </swiper-container>

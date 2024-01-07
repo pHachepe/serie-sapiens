@@ -27,6 +27,10 @@ export class SwiperComponent {
       Object.assign(this.swiperRef?.nativeElement, { slidesPerView: 2.3 });
     }
   }
+
+  trackById(_index: any, item: { id: any }) {
+    return item.id; // o cualquier propiedad única de tus items
+  }
 }
 
 @NgModule({
