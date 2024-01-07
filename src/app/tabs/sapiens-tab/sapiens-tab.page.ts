@@ -92,6 +92,8 @@ export class SapiensTabPage {
     this.chatMessages.push({ sender: 'user', text: this.searchText });
     this.scrollToBottom();
 
+    const selectedMovieIds = new Set();
+
     this.gptApiService
       .getApiResponseChatGPTtopicFromServer(this.searchText)
       .pipe(
@@ -108,8 +110,15 @@ export class SapiensTabPage {
           const searchObservables = results.map((result) =>
             this.moviedbService.search(result.ot).pipe(
               switchMap((apiResult) => {
-                const firstResult = apiResult.results[0];
-                return firstResult ? of(firstResult) : of(null);
+                // Encuentra el primer resultado no nulo y no previamente seleccionado
+                const newResult = apiResult.results.find(
+                  (res) => !selectedMovieIds.has(res.id)
+                );
+                if (newResult) {
+                  selectedMovieIds.add(newResult.id);
+                  return of(newResult);
+                }
+                return of(null);
               })
             )
           );
