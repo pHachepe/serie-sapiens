@@ -1,7 +1,7 @@
 <app-header title="Buscar"></app-header>
 
 <ion-content class="bg-gray-100 dark:bg-gray-800 fade-in">
-  <ion-searchbar class="flex-grow mb-2" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
+  <ion-searchbar class="flex-grow mb-2 rounded-lg" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
     (ionChange)="onSearchChange()"></ion-searchbar>
 
   <div *ngIf="isLoading" class="text-center">
@@ -9,24 +9,37 @@
   </div>
 
   <div *ngIf="!isLoading && searchResults?.results?.length === 0"
-    class="text-center p-4 text-lg text-gray-800 dark:text-gray-200">No se encontraron resultados</div>
+    class="text-center p-4 text-lg text-gray-600 dark:text-gray-300">No se encontraron resultados</div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
     <!-- Bucle para los resultados de búsqueda -->
     <div *ngFor="let item of searchResults?.results" (click)="openDetails(item)">
-      <div class="flex h-full bg-white dark:bg-gray-700 overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+      <div
+        class="flex h-full bg-white dark:bg-neutral-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
         <!-- Imagen a la izquierda -->
         <div class="w-2/3 h-full flex items-center justify-center">
           <img src="https://image.tmdb.org/t/p/w500/{{(item.poster_path || item.backdrop_path)}}" alt="{{ item.title }}"
-            class="w-full h-full object-cover">
+            class="w-full h-full object-cover rounded-l-lg">
         </div>
         <!-- Información a la derecha -->
-        <div class="p-4 w-2/3 text-gray-800 dark:text-gray-200">
-          <h2 class="text-xl font-bold mb-2">{{ item.title || item.name }}</h2>
-          <p class="text-sm">{{ item.overview | slice:0:150 }}...</p>
-          <div class="flex justify-between items-center mt-4">
-            <span class="font-semibold">{{ item.vote_average }}/10</span>
-            <span class="text-sm">{{ item.release_date | date: 'yyyy-MM-dd' }}</span>
+        <div class="flex flex-col justify-between p-4 w-2/3 text-gray-800 dark:text-gray-200">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">{{ item.title || item.name }}</h2>
+            <p class="text-sm text-gray-700 dark:text-gray-300">{{ item.overview | slice:0:150 }}...</p>
+          </div>
+          <div class="mt-4">
+            <div class="mb-2">
+              <span class="flex items-center font-semibold text-gray-900 dark:text-white">
+                <ion-icon name="star" class="mr-1 text-yellow-400"></ion-icon>
+                {{ item.vote_average.toFixed(2) }}/10
+              </span>
+            </div>
+            <div *ngIf="item.release_date">
+              <span class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <ion-icon name="calendar" class="mr-1 text-blue-500"></ion-icon>
+                {{ item.release_date | date: 'dd/MM/yyyy' }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
