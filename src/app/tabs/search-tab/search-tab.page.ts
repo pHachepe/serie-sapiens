@@ -3,7 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MoviedbService } from 'src/app/api/moviedb.service';
-import { ApiResult } from 'src/app/models/result.model';
+import { ApiResult, Result } from 'src/app/models/result.model';
 
 @Component({
   selector: 'app-search-tab',
@@ -50,7 +50,7 @@ export class SearchTabPage implements OnInit {
     this.searchSubject.next(this.searchQuery);
   }
 
-  openDetails(item: any) {
+  openDetails(item: Result) {
     this.navCtrl.navigateForward([
       'tabs/searchtab/details',
       item.media_type,

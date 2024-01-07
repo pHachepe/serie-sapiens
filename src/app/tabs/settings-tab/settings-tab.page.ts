@@ -13,26 +13,41 @@ export class SettingsTabPage implements OnInit {
   brightnessLevel = 100; // Default brightness level (0 to 100)
   fontSizeLevel = 16; // Default font size level (12 to 24)
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.initializeSettings();
   }
 
   initializeSettings() {
-    this.isDarkMode = this.getSettingFromLocalStorage('isDarkMode', this.isDarkMode);
+    this.isDarkMode = this.getSettingFromLocalStorage(
+      'isDarkMode',
+      this.isDarkMode
+    );
     this.applyDarkMode(this.isDarkMode);
 
-    this.isTextSizeLarge = this.getSettingFromLocalStorage('isTextSizeLarge', this.isTextSizeLarge);
+    this.isTextSizeLarge = this.getSettingFromLocalStorage(
+      'isTextSizeLarge',
+      this.isTextSizeLarge
+    );
     this.applyTextSize(this.isTextSizeLarge);
 
-    this.isBoldTextEnabled = this.getSettingFromLocalStorage('isBoldTextEnabled', this.isBoldTextEnabled);
+    this.isBoldTextEnabled = this.getSettingFromLocalStorage(
+      'isBoldTextEnabled',
+      this.isBoldTextEnabled
+    );
     this.applyBoldText(this.isBoldTextEnabled);
 
-    this.brightnessLevel = this.getSettingFromLocalStorage('brightnessLevel', this.brightnessLevel);
+    this.brightnessLevel = this.getSettingFromLocalStorage(
+      'brightnessLevel',
+      this.brightnessLevel
+    );
     this.applyBrightness(this.brightnessLevel);
 
-    this.fontSizeLevel = this.getSettingFromLocalStorage('fontSizeLevel', this.fontSizeLevel);
+    this.fontSizeLevel = this.getSettingFromLocalStorage(
+      'fontSizeLevel',
+      this.fontSizeLevel
+    );
     this.applyFontSize(this.fontSizeLevel);
   }
 
@@ -78,15 +93,21 @@ export class SettingsTabPage implements OnInit {
     const minFontSize = 12;
     const maxFontSize = 24;
     const normalizedSize = Math.min(Math.max(size, minFontSize), maxFontSize);
-    document.documentElement.style.setProperty('--text-base-size', `${normalizedSize}px`);
+    document.documentElement.style.setProperty(
+      '--text-base-size',
+      `${normalizedSize}px`
+    );
     this.saveSettingToLocalStorage('fontSizeLevel', normalizedSize);
   }
 
   applyBrightness(level: number) {
     const minBrightness = 40;
-    const normalizedLevel = (level < minBrightness) ? minBrightness : level;
+    const normalizedLevel = level < minBrightness ? minBrightness : level;
     const brightnessValue = normalizedLevel / 100;
-    document.documentElement.style.setProperty('--app-brightness', `${brightnessValue}`);
+    document.documentElement.style.setProperty(
+      '--app-brightness',
+      `${brightnessValue}`
+    );
   }
 
   async updateStatusBarStyle(isDarkMode: boolean) {
@@ -136,7 +157,7 @@ export class SettingsTabPage implements OnInit {
   }
 
   resetToDefaults() {
-    // Define tus valores predeterminados
+    // Valores predeterminados
     this.isDarkMode = true;
     this.isTextSizeLarge = false;
     this.isBoldTextEnabled = false;

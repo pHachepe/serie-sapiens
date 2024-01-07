@@ -28,8 +28,8 @@ export class SwiperComponent {
     }
   }
 
-  trackById(_index: any, item: { id: any }) {
-    return item.id; // o cualquier propiedad única de tus items
+  trackById(_index: number, item: Result) {
+    return item.id;
   }
 }
 
@@ -40,7 +40,3 @@ export class SwiperComponent {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SwiperModule {}
-
-// https://manuel-rauber.com/2021/02/23/youre-using-custom_elements_schema-wrong/
-// https://ionicframework.com/docs/angular/slides
-// https://swiperjs.com/demos#pagination-progress

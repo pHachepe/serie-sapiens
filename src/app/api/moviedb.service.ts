@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MediaType } from '../models/media-types.model';
+import { Provider, StreamingServiceOffer } from '../models/provider.model';
 import { ApiResult, Result } from '../models/result.model';
 import { Video, Videos } from '../models/video.model';
 
@@ -32,7 +33,7 @@ export class MoviedbService {
     mediaId: number,
     type: MediaType,
     countryCode: string = 'ES'
-  ): Observable<any> {
+  ): Observable<Provider> {
     let path = `${type}/${mediaId}/watch/providers`;
     return this.http.get<any>(this.buildUrl(path)).pipe(
       map((response) => response.results[countryCode] || null),
@@ -40,9 +41,11 @@ export class MoviedbService {
         if (result) {
           ['flatrate', 'rent', 'buy'].forEach((category) => {
             if (result[category]) {
-              result[category].forEach((provider: any) => {
-                provider.logo_path = `https://www.themoviedb.org/t/p/w92/${provider.logo_path}`;
-              });
+              result[category].forEach(
+                (streamingServiceOffer: StreamingServiceOffer) => {
+                  streamingServiceOffer.logo_path = `https://www.themoviedb.org/t/p/w92/${streamingServiceOffer.logo_path}`;
+                }
+              );
             }
           });
         }
@@ -58,9 +61,7 @@ export class MoviedbService {
   ): Observable<ApiResult> {
     let path = `${type}/${mediaId}/recommendations`;
     return this.http
-      .get<ApiResult>(
-        this.buildUrl(path, { language: 'es-ES', page})
-      )
+      .get<ApiResult>(this.buildUrl(path, { language: 'es-ES', page }))
       .pipe(
         map((apiResult) => ({
           ...apiResult,
@@ -172,7 +173,10 @@ export class MoviedbService {
         map((apiResult) => ({
           ...apiResult,
           results: apiResult.results.filter(
-            (result) => result.media_type !== 'person' && result.vote_count > 0 && result.poster_path
+            (result) =>
+              result.media_type !== 'person' &&
+              result.vote_count > 0 &&
+              result.poster_path
           ),
         }))
       );
