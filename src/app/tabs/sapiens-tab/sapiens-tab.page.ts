@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { GptApiService } from 'src/app/api/gpt-api.service';
 import { MoviedbService } from 'src/app/api/moviedb.service';
@@ -16,9 +16,20 @@ interface ChatMessage {
   templateUrl: './sapiens-tab.page.html',
 })
 export class SapiensTabPage {
+  @ViewChild('messageContainer') private messageContainer!: ElementRef;
+
   searchResults: Result[] = [];
   chatMessages: ChatMessage[] = [];
   searchText: string = '';
+  isLoading = false;
+
+  constructor(
+    private gptApiService: GptApiService,
+    private moviedbService: MoviedbService
+  ) {
+    const randomWelcome = this.getRandomMessage(this.welcomeMessages);
+    this.chatMessages.push({ sender: 'app', text: randomWelcome });
+  }
 
   private welcomeMessages: string[] = [
     'Hola, ¿qué película buscas hoy?',
@@ -66,18 +77,20 @@ export class SapiensTabPage {
     'He aquí algunas películas que podrían interesarte.',
   ];
 
-  constructor(
-    private gptApiService: GptApiService,
-    private moviedbService: MoviedbService
-  ) {
-    const randomWelcome = this.getRandomMessage(this.welcomeMessages);
-    this.chatMessages.push({ sender: 'app', text: randomWelcome });
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      if (this.messageContainer && this.messageContainer.nativeElement) {
+        const scrollElement = this.messageContainer.nativeElement;
+        scrollElement.scrollTop = scrollElement.scrollHeight;
+      }
+    }, 100); // setTimeout para asegurar que el DOM esté actualizado
   }
 
   searchMovies() {
     if (!this.searchText) return;
-
+    this.isLoading = true; // Activa el indicador de carga
     this.chatMessages.push({ sender: 'user', text: this.searchText });
+    this.scrollToBottom();
 
     this.gptApiService
       .getApiResponseChatGPTtopicFromServer(this.searchText)
@@ -127,6 +140,9 @@ export class SapiensTabPage {
           text: reply?.message || randomResponse,
           searchResults: validSearchResults,
         });
+
+        this.scrollToBottom();
+        this.isLoading = false; // Desactiva el indicador de carga una vez completado
       });
 
     this.searchText = ''; // Restablecer campo de búsqueda
