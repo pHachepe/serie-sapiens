@@ -28,18 +28,3 @@ export interface Result {
   media_type?: string;
   videos?: Video[];
 }
-
-/*
-{
-"belongs_to_collection": null,
-"budget": 0,
-"homepage": "",
-"imdb_id": null,
-"production_companies": [],
-"production_countries": [],
-"revenue": 0,
-"spoken_languages": [],
-"status": "In Production",
-"tagline": ""
-}
-*/
