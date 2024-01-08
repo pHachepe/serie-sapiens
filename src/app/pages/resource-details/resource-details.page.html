@@ -5,9 +5,9 @@
     <!-- Trailer -->
     <iframe *ngIf="trailerUrlSafe" [src]="trailerUrlSafe" class="w-full h-64" frameborder="0" allowfullscreen></iframe>
     <!-- Si no hay tráiler, mostrar poster -->
-    <img *ngIf="!trailerUrlSafe && resultDetails?.poster_path"
+    <ion-img *ngIf="!trailerUrlSafe && resultDetails?.poster_path"
       [src]="'https://image.tmdb.org/t/p/w500' + resultDetails.poster_path" class="w-full h-64 object-cover"
-      alt="Backdrop">
+      alt="Backdrop"></ion-img>
 
     <!-- Fila de iconos para acciones -->
     <div class="flex dark:bg-neutral-900 ">
@@ -38,9 +38,9 @@
         class="absolute top-0 left-0 w-full h-16 bg-gradient-to-t from-transparent to-neutral-600"></div>
 
       <!-- Fondo del póster con opacidad -->
-      <img *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
+      <ion-img *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
         [src]="'https://image.tmdb.org/t/p/w500' + (resultDetails.backdrop_path || resultDetails.poster_path)"
-        class="absolute top-0 w-full h-full object-cover opacity-70" alt="Poster">
+        class="absolute top-0 w-full h-full object-cover opacity-70" alt="Poster" alt="resultDetails.title"></ion-img>
 
       <!-- Degradado inferior -->
       <div *ngIf="resultDetails.backdrop_path || resultDetails.poster_path"
@@ -89,8 +89,8 @@
         </div>
         <div class="flex flex-wrap">
           <ion-button fill="clear" *ngFor="let provider of flatrateProviders$ | async" class="m-0 my-1">
-            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
-              alt="{{ provider.provider_name }}">
+            <ion-img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}"></ion-img>
           </ion-button>
         </div>
       </div>
@@ -103,8 +103,8 @@
         </div>
         <div class="flex flex-wrap">
           <ion-button fill="clear" *ngFor="let provider of rentProviders$ | async" class="m-0 my-1">
-            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
-              alt="{{ provider.provider_name }}">
+            <ion-img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}"></ion-img>
           </ion-button>
         </div>
       </div>
@@ -117,15 +117,16 @@
         </div>
         <div class="flex flex-wrap">
           <ion-button fill="clear" *ngFor="let provider of buyProviders$ | async" class="m-0 my-1">
-            <img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
-              alt="{{ provider.provider_name }}">
+            <ion-img *ngIf="provider.logo_path" [src]="provider.logo_path" class="w-8 h-8"
+              alt="{{ provider.provider_name }}"></ion-img>
           </ion-button>
         </div>
       </div>
     </section>
 
     <ng-container *ngIf="recommendations$ | async as recommendations">
-      <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones" containerClass="px-4">
+      <app-swiper *ngIf="recommendations.length > 0" [items]="recommendations" title="Recomendaciones"
+        containerClass="px-4">
       </app-swiper>
     </ng-container>
 

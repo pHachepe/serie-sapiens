@@ -18,8 +18,8 @@
         class="flex h-full bg-white dark:bg-neutral-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
         <!-- Imagen a la izquierda -->
         <div class="w-2/3 h-full flex items-center justify-center">
-          <img src="https://image.tmdb.org/t/p/w500/{{(item.poster_path || item.backdrop_path)}}" alt="{{ item.title }}"
-            class="w-full h-full object-cover rounded-l-lg">
+          <ion-img [src]="'https://image.tmdb.org/t/p/w500' + (item.poster_path || item.backdrop_path)"
+            alt="{{ item.title }}" class="w-full h-full object-cover rounded-l-lg"></ion-img>
         </div>
         <!-- Información a la derecha -->
         <div class="flex flex-col justify-between p-4 w-2/3 text-gray-800 dark:text-gray-200">
