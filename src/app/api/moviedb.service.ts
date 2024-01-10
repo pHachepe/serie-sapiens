@@ -11,7 +11,7 @@ import { Video, Videos } from '../models/video.model';
   providedIn: 'root',
 })
 export class MoviedbService {
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.movieDBUrl;
   private apiKey = environment.apiKey;
 
   constructor(private http: HttpClient) {}
@@ -113,14 +113,14 @@ export class MoviedbService {
   // Método para obtener documentales populares
   getPopularDocumentaries(page: number = 1) {
     return this.http.get<ApiResult>(
-      `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&with_genres=99&language=es-ES&page=${page}`
+      `${environment.movieDBUrl}/discover/movie?api_key=${environment.apiKey}&with_genres=99&language=es-ES&page=${page}`
     );
   }
 
   // Método para obtener los mejor valorados
   getTopRated(type: MediaType, page: number = 1) {
     return this.http.get<ApiResult>(
-      `${environment.baseUrl}/discover/${type}?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`
+      `${environment.movieDBUrl}/discover/${type}?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`
     );
   }
 
@@ -137,7 +137,7 @@ export class MoviedbService {
   // Método para obtener los documentales mejor valorados
   getTopRatedDocumentaries(page: number = 1) {
     return this.http.get<ApiResult>(
-      `${environment.baseUrl}/discover/movie?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&with_genres=99&vote_count.gte=200`
+      `${environment.movieDBUrl}/discover/movie?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&with_genres=99&vote_count.gte=200`
     );
   }
 
