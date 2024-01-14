@@ -1,6 +1,6 @@
 # Serie Sapiens
 
-Este proyecto es una aplicación desarrollada utilizando el framework Ionic. Está diseñado para proporcionar una experiencia de usuario rica y fluida en plataformas móviles y web.
+Este proyecto es una aplicación desarrollada utilizando el framework Ionic. Está diseñado para proporcionar una experiencia de usuario fluida en plataformas móviles.
 
 ## Comenzando
 
