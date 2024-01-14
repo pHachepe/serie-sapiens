@@ -7,19 +7,19 @@ Este proyecto es una aplicación desarrollada utilizando el framework Ionic. Est
 Instala Node.js y npm en tu sistema.
 
 
-Instala Angular CLI de forma global en tu sistema.
+Instala Angular CLI de forma global en tu sistema:
 
 ```
 npm install -g @angular/cli
 ```
 
-Instala Ionic CLI de forma global en tu sistema.
+Instala Ionic CLI de forma global en tu sistema:
 
 ```
 npm install -g @ionic/cli
 ```
 
-Para comenzar a trabajar con este proyecto, clona el repositorio y ejecuta `npm install` para instalar las dependencias.
+Para comenzar a trabajar con este proyecto, clona el repositorio y ejecuta `npm install` para instalar las dependencias:
 
 ```
 git clone https://github.com/pHachepe/serie-sapiens.git
