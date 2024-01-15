@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSearchbar, NavController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MoviedbService } from 'src/app/api/moviedb.service';
@@ -10,6 +10,8 @@ import { ApiResult, Result } from 'src/app/models/result.model';
   templateUrl: './search-tab.page.html',
 })
 export class SearchTabPage implements OnInit {
+  @ViewChild(IonSearchbar) inputSearch!: IonSearchbar;
+
   searchQuery: string = '';
   searchResults: ApiResult | null = null;
   isLoading = false;
@@ -48,6 +50,12 @@ export class SearchTabPage implements OnInit {
 
   onSearchChange() {
     this.searchSubject.next(this.searchQuery);
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.inputSearch.setFocus();
+    }, 300);
   }
 
   openDetails(item: Result) {

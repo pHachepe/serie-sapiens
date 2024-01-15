@@ -1,12 +1,14 @@
 <app-header title="Buscar"></app-header>
 
 <ion-content class="bg-gray-100 dark:bg-gray-800 fade-in">
-  <ion-searchbar class="flex-grow mb-2 rounded-lg" placeholder="Buscar películas, series..." [(ngModel)]="searchQuery"
-    (ionChange)="onSearchChange()"></ion-searchbar>
+  <ion-searchbar #inputSearch class="flex-grow mb-2 rounded-lg" placeholder="Buscar películas, series..."
+    [(ngModel)]="searchQuery" (ionChange)="onSearchChange()"></ion-searchbar>
 
   <div *ngIf="isLoading" class="text-center">
     <ion-spinner></ion-spinner> Buscando...
   </div>
+
+    <img  *ngIf="searchResults === null" src="../../../assets/icons/logo.svg" alt="Logo" class="w-64 mx-auto opacity-50">
 
   <div *ngIf="!isLoading && searchResults?.results?.length === 0"
     class="text-center p-4 text-lg text-gray-600 dark:text-gray-300">No se encontraron resultados</div>
