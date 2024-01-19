@@ -83,12 +83,12 @@ export class SapiensTabPage {
         const scrollElement = this.messageContainer.nativeElement;
         scrollElement.scrollTop = scrollElement.scrollHeight;
       }
-    }, 100); // setTimeout para asegurar que el DOM esté actualizado
+    }, 100); // setTimeout to ensure DOM is updated
   }
 
   searchMovies() {
     if (!this.searchText) return;
-    this.isLoading = true; // Activa el indicador de carga
+    this.isLoading = true; // Activates the loading indicator
     this.chatMessages.push({ sender: 'user', text: this.searchText });
     this.scrollToBottom();
 
@@ -98,7 +98,7 @@ export class SapiensTabPage {
       .getApiResponseChatGPTtopicFromServer(this.searchText)
       .pipe(
         switchMap((results) => {
-          // Filtrar para encontrar el resultado con "ot": "reply" y quitarlo de la lista
+          // Filter to find the result with "ot": "reply" and remove it from the list
           const reply = results.find(
             (result) => result.mt === MT.Reply || result.ot === 'reply'
           );
@@ -106,11 +106,11 @@ export class SapiensTabPage {
             (result) => result.mt !== MT.Reply && result.ot !== 'reply'
           );
 
-          // Crear un array de Observables para cada búsqueda
+          // Create an array of Observables for each search
           const searchObservables = results.map((result) =>
             this.moviedbService.search(result.ot).pipe(
               switchMap((apiResult) => {
-                // Encuentra el primer resultado no nulo y no previamente seleccionado
+                // Find the first non-null result that has not been previously selected
                 const newResult = apiResult.results.find(
                   (res) => !selectedMovieIds.has(res.id)
                 );
@@ -123,10 +123,10 @@ export class SapiensTabPage {
             )
           );
 
-          // Retorna un Observable que emite un array de todos los resultados
+          // Returns an Observable that emits an array of all results
           return forkJoin(searchObservables).pipe(
             switchMap((searchResults) => {
-              // Filtrar los resultados nulos y devolver los resultados junto con el 'reply'
+              // Filter out the null results and return the results along with the 'reply'
               return of({
                 searchResults: searchResults.filter((res) => res !== null),
                 reply,
@@ -138,12 +138,12 @@ export class SapiensTabPage {
       .subscribe(({ searchResults, reply }) => {
         const randomResponse = this.getRandomMessage(this.responseMessages);
 
-        // Filtrar los resultados para excluir los valores null
+        // Filter the results to exclude null values
         const validSearchResults = searchResults.filter(
           (result) => result !== null
         ) as Result[];
 
-        // Añadir un mensaje con los resultados de búsqueda
+        // Add a message with the search results
         this.chatMessages.push({
           sender: 'app',
           text: reply?.message || randomResponse,
@@ -151,10 +151,10 @@ export class SapiensTabPage {
         });
 
         this.scrollToBottom();
-        this.isLoading = false; // Desactiva el indicador de carga una vez completado
+        this.isLoading = false; // Disables the loading indicator once completed
       });
 
-    this.searchText = ''; // Restablecer campo de búsqueda
+    this.searchText = ''; // Reset search field
   }
 
   private getRandomMessage(messages: string[]): string {

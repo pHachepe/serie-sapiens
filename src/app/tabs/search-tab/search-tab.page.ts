@@ -25,13 +25,13 @@ export class SearchTabPage implements OnInit {
   ngOnInit() {
     this.searchSubject
       .pipe(
-        debounceTime(500), // Espera 500ms después de cada cambio
-        distinctUntilChanged(), // Solo emite si el valor actual es diferente al anterior
+        debounceTime(500), // Wait 500ms after each keystroke before considering the term
+        distinctUntilChanged(), // Only emit when the current value is different than the last
         switchMap((query) => {
           this.isLoading = true;
           if (!query.trim()) {
             this.isLoading = false;
-            return []; // Evita búsquedas vacías
+            return []; // Avoid empty searches
           }
           return this.moviedbService.search(query);
         })

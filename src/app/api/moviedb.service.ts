@@ -110,38 +110,32 @@ export class MoviedbService {
     return this.getTrending('tv', 'day', page);
   }
 
-  // Método para obtener documentales populares
   getPopularDocumentaries(page: number = 1) {
     return this.http.get<ApiResult>(
       `${environment.movieDBUrl}/discover/movie?api_key=${environment.apiKey}&with_genres=99&language=es-ES&page=${page}`
     );
   }
 
-  // Método para obtener los mejor valorados
   getTopRated(type: MediaType, page: number = 1) {
     return this.http.get<ApiResult>(
       `${environment.movieDBUrl}/discover/${type}?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`
     );
   }
 
-  // Método para obtener las películas mejor valoradas
   getTopRatedMovies(page: number = 1) {
     return this.getTopRated('movie', page);
   }
 
-  // Método para obtener las series mejor valoradas
   getTopRatedSeries(page: number = 1) {
     return this.getTopRated('tv', page);
   }
 
-  // Método para obtener los documentales mejor valorados
   getTopRatedDocumentaries(page: number = 1) {
     return this.http.get<ApiResult>(
       `${environment.movieDBUrl}/discover/movie?api_key=${environment.apiKey}&include_adult=false&include_video=false&language=es-ES&page=${page}&sort_by=vote_average.desc&with_genres=99&vote_count.gte=200`
     );
   }
 
-  // Método para obtener los próximos estrenos
   getUpcoming(type: MediaType, page: number = 1) {
     let path = `${type}/upcoming`;
     return this.http.get<ApiResult>(

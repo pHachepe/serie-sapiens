@@ -12,11 +12,11 @@ class MockActivatedRoute {
 }
 
 class MockMoviedbService {
-  // Métodos mock según sean requeridos
+  // Mock methods as needed
 }
 
 class MockUserListService {
-  // Métodos mock según sean requeridos
+  // Mock methods as needed
 }
 
 describe('ResourceDetailsPage', () => {

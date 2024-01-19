@@ -157,21 +157,21 @@ export class SettingsTabPage implements OnInit {
   }
 
   resetToDefaults() {
-    // Valores predeterminados
+    // Default values
     this.isDarkMode = true;
     this.isTextSizeLarge = false;
     this.isBoldTextEnabled = false;
     this.brightnessLevel = 100;
     this.fontSizeLevel = 16;
 
-    // Aplica y guarda los valores predeterminados
+    // Apply and save default values
     this.applyDarkMode(this.isDarkMode);
     this.applyTextSize(this.isTextSizeLarge);
     this.applyBoldText(this.isBoldTextEnabled);
     this.applyBrightness(this.brightnessLevel);
     this.applyFontSize(this.fontSizeLevel);
 
-    // Guarda en localStorage
+    // Save default values to local storage
     this.saveSettingToLocalStorage('isDarkMode', this.isDarkMode);
     this.saveSettingToLocalStorage('isTextSizeLarge', this.isTextSizeLarge);
     this.saveSettingToLocalStorage('isBoldTextEnabled', this.isBoldTextEnabled);
